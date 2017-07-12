@@ -31,9 +31,14 @@ gulp.task('styles:less', function () {
 })
 
 gulp.task('styles:sass', function () {
+  const includePaths = [
+    "./app",
+    "./node_modules/bootstrap-sass/assets/stylesheets"
+  ];
+
   return gulp.src('app/styles/*.scss')
     .pipe(gulpif(args.sourcemaps, sourcemaps.init()))
-    .pipe(sass({ includePaths: ['./app'] }).on('error', function (error) {
+    .pipe(sass({ includePaths }).on('error', function (error) {
       gutil.log(gutil.colors.red('Error (' + error.plugin + '): ' + error.message))
       this.emit('end')
     }))
