@@ -7,7 +7,7 @@
   <script src="../scripts/popup.js"></script>
 </head>
 <body ng-controller="PopupCtrl" ng-init="init()">
-  <div class="panel panel-default panel-search" ng-if="search">
+  <div class="panel panel-default panel-search" ng-if="search && showNew">
     <div class="panel-body">
       <div class="form-group">
         <input type="text" class="form-control" ng-model="search.name" />
@@ -16,9 +16,9 @@
     </div>
     <div class="panel-footer">
       <div class="pull-right">
-        <button class="btn btn-default">Cancel</button>
+        <button class="btn btn-default" ng-click="cancelNewSearch()">Cancel</button>
       </div>
-      <button class="btn btn-primary">Save as a New Search</button>
+      <button class="btn btn-primary" ng-click="saveNewSearch()">Save as a New Search</button>
     </div>
   </div>
 </body>

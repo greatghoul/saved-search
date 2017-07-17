@@ -5,10 +5,14 @@ const URL_PAT = /https?:\/\/www\.google\..*\/search\?.*/;
 const app = angular.module('app', []);
 app.controller('PopupCtrl', $scope => {
   $scope.search = null;
+  $scope.showNew = false;
 
   $scope.init = function() {
     $scope.activeTab().then(tab => {
-      $scope.$apply(() => $scope.search = { url: tab.url, name: $scope.keywords(tab.url) });
+      $scope.$apply(() => {
+        $scope.search = { url: tab.url, name: $scope.keywords(tab.url) };
+        $scope.showNew = true;
+      });
     });
   };
 
@@ -25,5 +29,13 @@ app.controller('PopupCtrl', $scope => {
         }
       });
     });
-  };
+  }
+
+  $scope.cancelNewSearch = function() {
+    $scope.showNew = false;
+  }
+
+  $scope.saveNewSearch = function() {
+    $scope.showNew = false;
+  }
 });
