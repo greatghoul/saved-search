@@ -52,7 +52,9 @@
   },
   "dependencies": {
     "angular": "^1.6.5",
+    "angular-ui-bootstrap": "^2.5.0",
     "bootstrap-sass": "^3.3.7",
+    "bootswatch": "^3.3.7",
     "lodash": "^4.17.4"
   }
 }

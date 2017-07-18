@@ -33,7 +33,7 @@ gulp.task('styles:less', function () {
 gulp.task('styles:sass', function () {
   const includePaths = [
     "./app",
-    "./node_modules/bootstrap-sass/assets/stylesheets"
+    "./node_modules",
   ];
 
   return gulp.src('app/styles/*.scss')

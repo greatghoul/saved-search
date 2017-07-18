@@ -6,6 +6,10 @@ html {
   padding: 0;
 }
 
+.no-margin {
+  margin: 0;
+}
+
 .truncate {
   display: block;
   overflow: hidden;
@@ -27,6 +31,9 @@ html {
 .list-searches {
   border: 0;
   border-radius: 0;
+  overflow-y: auto;
+  max-height: 380px;
+  margin-bottom: 0;
 
   .list-group-item {
     border-radius: 0;
@@ -38,4 +45,17 @@ html {
       cursor: pointer;
     }
   }
+}
+
+.panel-primary {
+  position: fixed;
+  z-index: 1050;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin-bottom: 0;
+}
+
+.dropdown-menu {
+  max-width: 240px;
 }

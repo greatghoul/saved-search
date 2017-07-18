@@ -1,44 +1,33 @@
 import angular from 'angular';
 import _ from 'lodash';
+import dropdown from 'angular-ui-bootstrap/src/dropdown/index-nocss';
 
 const URL_PAT = /https?:\/\/www\.google\..*\/search\?.*/;
 
-const app = angular.module('app', []);
-app.controller('PopupCtrl', function($scope) {
-  $scope.name = null;
+const app = angular.module('app', [dropdown]);
+app.controller('PopupCtrl', function($timeout, $scope) {
   $scope.search = null;
-  $scope.persisted = false;
-  $scope.showSaveModal = false;
-  $scope.showNameDropdown = false;
   $scope.searches = [];
+  $scope.mode = null;
 
   $scope.init = function() {
-    $scope.loadSavedSearches();
+    $scope.loadSearches();
 
     $scope.activeTab().then(tab => {
       $scope.$apply(() => {
         const keywords = $scope.keywords(tab.url);
-        const search = { url: tab.url, name: keywords, keywords: keywords };
-        $scope.openSaveModal(search, false);
+        $scope.search = { url: tab.url, name: keywords, keywords: keywords };
+        $scope.mode = 'create';
       });
     });
   }
 
-  $scope.toggleNameDropdown = function(show) {
-    $scope.showNameDropdown = show;
+  $scope.loadSearches = function() {
+    $scope.searches = JSON.parse(localStorage['searches'] || '[]')
   }
 
-  $scope.selectSavedSearch = function(name) {
-    $scope.search.name = name;
-    $scope.toggleNameDropdown(false);
-  }
-
-  $scope.loadSavedSearches = function() {
-    for (const name in localStorage) {
-      if (/^search_.*$/.test(name)) {
-        $scope.searches.push(JSON.parse(localStorage[name]));
-      }
-    }
+  $scope.saveSearches = function() {
+    localStorage['searches'] = JSON.stringify($scope.searches);
   }
 
   $scope.keywords = function(url) {
@@ -56,32 +45,38 @@ app.controller('PopupCtrl', function($scope) {
     });
   }
 
-  $scope.openSaveModal = function(search, persisted) {
-    $scope.persisted = persisted;
-    $scope.name = search.name;
-    $scope.search = search;
-    $scope.showSaveModal = true;
+  $scope.clearSearch = function() {
+    $scope.search = null;
+    $scope.mode = null;
   }
 
-  $scope.closeSaveModal = function() {
-    $scope.showSaveModal = false;
+  $scope.editSearch = function(index) {
+    $scope.search = { name: $scope.searches[index].name, index: index };
+    $scope.mode = 'update';
   }
 
   $scope.saveSearch = function() {
-    if ($scope.persisted) {
-      delete localStorage[`search_${$scope.name}`];
-      const index = _.findIndex($scope.searches, { name: $scope.name });
-      $scope.searches.splice(index, 1);
-    }
+    $scope.searches[$scope.search.index].name = $scope.search.name;
+    $scope.saveSearches();
+    $scope.clearSearch();
+  }
 
-    localStorage[`search_${$scope.search.name}`] = JSON.stringify($scope.search);
-    const search = _.find($scope.searches, { name: $scope.search.name });
-    if (search) {
-      _.assign(search, $scope.search);
-    } else {
-      $scope.searches.push($scope.search);
-    }
+  $scope.removeSearch = function() {
+    $scope.searches.splice($scope.search.index, 1);
+    $scope.saveSearches();
+    $scope.clearSearch();
+  }
 
-    $scope.closeSaveModal();
+  $scope.createSearch = function() {
+    $scope.searches.push($scope.search);
+    $scope.saveSearches();
+    $scope.clearSearch();
+  }
+
+  $scope.replaceSearch = function(savedSearch) {
+    savedSearch.keywords = $scope.search.keywords;
+    savedSearch.url = $scope.search.url;
+    $scope.saveSearches();
+    $scope.clearSearch();
   }
 });
