@@ -2,19 +2,40 @@
 
 html {
   width: 380px;
-  min-height: 320px;
-  padding: 5px 8px;
+  height: 380px;
+  padding: 0;
 }
 
-.panel-search {
-  .form-group {
-    margin-bottom: 0;
-  }
+.truncate {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-  .search-url {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin-bottom: 0;
-  }  
+.search-name {
+  margin-right: 50px;
+}
+
+.search-url {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 0;
+}
+
+.list-searches {
+  border: 0;
+  border-radius: 0;
+
+  .list-group-item {
+    border-radius: 0;
+
+    &:hover {
+      color: #555;
+      text-decoration: none;
+      background-color: #f5f5f5;
+      cursor: pointer;
+    }
+  }
 }

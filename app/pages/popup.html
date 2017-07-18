@@ -7,19 +7,52 @@
   <script src="../scripts/popup.js"></script>
 </head>
 <body ng-controller="PopupCtrl" ng-init="init()">
-  <div class="panel panel-default panel-search" ng-if="search && showNew">
-    <div class="panel-body">
-      <div class="form-group">
-        <input type="text" class="form-control" ng-model="search.name" />
-        <p class="help-block small search-url" title="{{ search.url }}">{{ search.url }}</p>
+  <div class="modal show modal-search" ng-if="showSaveModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <code class="text-small text-info">{{ search.keywords }}</code>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-group" ng-if="persisted">Rename search as:</label>
+            <label class="form-group" ng-if="!persisted">Save search as:</label>
+            <div class="input-group">
+              <input class="form-control" ng-model="search.name">
+              <div class="input-group-btn" ng-class="{ open: showNameDropdown }">
+                <button class="btn btn-default dropdown-toggle"
+                        ng-click="toggleNameDropdown(!showNameDropdown)">
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" style="width: 328px;">
+                  <li class="dropdown-header">Update a saved search</li>
+                  <li ng-repeat="item in searches track by item.name">
+                    <a href="javascript:;" ng-click="selectSavedSearch(item.name)" class="truncate">
+                      {{ item.name }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" ng-click="closeSaveModal()">Cancel</button>
+          <button class="btn btn-primary" ng-click="saveSearch()">Save</button>
+        </div>
       </div>
-    </div>
-    <div class="panel-footer">
-      <div class="pull-right">
-        <button class="btn btn-default" ng-click="cancelNewSearch()">Cancel</button>
-      </div>
-      <button class="btn btn-primary" ng-click="saveNewSearch()">Save as a New Search</button>
     </div>
   </div>
+  <div class="modal-backdrop fade in" ng-if="showSaveModal"></div>
+
+  <ul class="list-group list-searches">
+    <li class="list-group-item" ng-repeat="item in searches track by item.name">
+      <div class="pull-right">
+        <a href="javascript:;" class="label label-success" ng-click="openSaveModal(item, true)">Edit</a>
+      </div>
+
+      <a href="{{ item.url }}" target="_blank" class="search-name truncate">{{ item.name }}</a>
+    </li>
+  </ul>
 </body>
 </html>

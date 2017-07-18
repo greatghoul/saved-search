@@ -52,6 +52,7 @@
   },
   "dependencies": {
     "angular": "^1.6.5",
-    "bootstrap-sass": "^3.3.7"
+    "bootstrap-sass": "^3.3.7",
+    "lodash": "^4.17.4"
   }
 }
