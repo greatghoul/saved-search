@@ -10,48 +10,60 @@
   <ul class="list-group list-searches">
     <li class="list-group-item" ng-repeat="savedSearch in searches track by $index">
       <div class="pull-right">
-        <button ng-click="editSearch($index)" class="btn btn-default btn-xs">Edit</button>
+        <button ng-click="editSearch($index)" class="btn btn-default btn-xs">{{ 'buttonEdit' | i18n }}</button>
       </div>
 
       <a href="{{ savedSearch.url }}" target="_blank" class="search-name truncate">{{ savedSearch.name }}</a>
     </li>
   </ul>
 
-  <div class="panel panel-primary" ng-if="mode == 'create'">
-    <div class="panel-body">
-      <input type="text" class="form-control" ng-model="search.name" />
+  <div class="panel panel-primary" ng-if="mode == 'create'" id="panel-new">
+    <div class="panel-body" ng-if="panelExpand">
+      <div class="form-group">
+        <strong class="help-block">{{ 'textSearchNameHint' | i18n }}</strong>
+        <input type="text" class="form-control" id="input-new" ng-model="search.name" />
+      </div>
     </div>
-    <div class="panel-footer text-right">
-      <button class="btn btn-default btn-sm" ng-click="clearSearch()">Dismiss</button>
+    <div class="panel-footer text-right" ng-if="panelExpand">
+      <button class="btn btn-default btn-sm" ng-click="clearSearch()">{{ 'buttonDismiss' | i18n }}</button>
       <div class="btn-group dropup" uib-dropdown>
-        <button type="button" class="btn btn-primary btn-sm" ng-click="createSearch()">Create</button>
+        <button type="button" class="btn btn-primary btn-sm" ng-click="createSearch()">{{ 'buttonCreate' | i18n }}</button>
         <button type="button" class="btn btn-primary btn-sm" uib-dropdown-toggle>
           <span class="caret"></span>
         </button>
         <ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu>
-          <li class="dropdown-header">Replace saved search</li>
+          <li class="dropdown-header">{{ 'textReplaceSavedSearch' | i18n }}</li>
           <li ng-repeat="savedSearch in searches track by $index">
             <a href="#" class="truncate" ng-click="replaceSearch(savedSearch)">{{ savedSearch.name }}</a>
           </li>
         </ul>
       </div>
     </div>
+    <div class="panel-footer" ng-if="!panelExpand">
+      <div class="pull-right">
+        <button class="btn btn-default btn-xs" ng-click="expandPanel()">{{ 'buttonShow' | i18n }}</button>
+      </div>
+      <span class="truncate">{{ search.name }}</span>
+    </div>
   </div>
 
-  <div class="panel panel-primary" ng-if="mode == 'update'">
+  <div class="panel panel-primary" ng-if="mode == 'update'" id="panel-edit">
     <div class="panel-body">
-      <input type="text" class="form-control" ng-model="search.name" />
+      <div class="form-group">
+        <strong class="help-block">{{ 'textSearchNameHint' | i18n }}</strong>
+        <input type="text" class="form-control" id="input-edit" ng-model="search.name" />
+      </div>
     </div>
     <div class="panel-footer text-right">
-      <button class="btn btn-default btn-sm" ng-click="clearSearch()">Dismiss</button>
-      <button class="btn btn-primary btn-sm" ng-click="saveSearch()">Save</button>
+      <button class="btn btn-default btn-sm" ng-click="clearSearch()">{{ 'buttonDismiss' | i18n }}</button>
+      <button class="btn btn-primary btn-sm" ng-click="saveSearch()">{{ 'buttonSave' | i18n }}</button>
 
       <div class="pull-left">
-        <button class="btn btn-danger btn-sm" ng-click="removeSearch()">Delete</button>
+        <button class="btn btn-danger btn-sm" ng-click="removeSearch()">{{ 'buttonDelete' | i18n }}</button>
       </div>
     </div>
   </div>
 
-  <div class="modal-backdrop fade in" ng-if="mode" ng-click="clearSearch()"></div>
+  <div class="modal-backdrop fade in" ng-if="panelExpand" ng-click="clearSearch()"></div>
 </body>
 </html>

@@ -14,5 +14,37 @@
   "browserActionTitle": {
     "message": "Saved Search",
     "description": "The title of the browser action button"
+  },
+  "buttonDismiss": {
+    "message": "Dismiss",
+    "description": "Dismiss button."
+  },
+  "buttonCreate": {
+    "message": "Create",
+    "description": "Create button."
+  },
+  "buttonShow": {
+    "message": "Show",
+    "description": "Show button."
+  },
+  "buttonEdit": {
+    "message": "Edit",
+    "description": "Edit button."
+  },
+  "buttonSave": {
+    "message": "Save",
+    "description": "Save button."
+  },
+  "buttonDelete": {
+    "message": "Delete",
+    "description": "Delete button."
+  },
+  "textReplaceSavedSearch": {
+    "message": "Replace a saved search",
+    "description": "Description to replace a saved search item."
+  },
+  "textSearchNameHint": {
+    "message": "Give this search a friendly name.",
+    "description": "The hint of search name field."
   }
 }

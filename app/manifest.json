@@ -25,5 +25,11 @@
   },
   "permissions": [
     "activeTab"
-  ]
+  ],
+  "__firefox__applications": {
+    "gecko": {
+      "id": "4090A368-CAF6-11E7-B7BD-EC04CB11D2E8",
+      "strict_min_version": "45.0"
+    }
+  }
 }

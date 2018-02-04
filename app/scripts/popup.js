@@ -5,10 +5,19 @@ import dropdown from 'angular-ui-bootstrap/src/dropdown/index-nocss';
 const URL_PAT = /https?:\/\/www\.google\..*\/search\?.*/;
 
 const app = angular.module('app', [dropdown]);
-app.controller('PopupCtrl', function($timeout, $scope) {
+
+app.filter('i18n', function () {
+  return function (key) {
+    console.log(key);
+    return chrome.i18n.getMessage(key)
+  }
+});
+
+app.controller('PopupCtrl', ['$timeout', '$scope', function($timeout, $scope) {
   $scope.search = null;
   $scope.searches = [];
   $scope.mode = null;
+  $scope.panelExpand = false;
 
   $scope.init = function() {
     $scope.loadSearches();
@@ -30,6 +39,13 @@ app.controller('PopupCtrl', function($timeout, $scope) {
     localStorage['searches'] = JSON.stringify($scope.searches);
   }
 
+  $scope.expandPanel = function() {
+    $scope.panelExpand = true;
+    $timeout(function() {
+      document.querySelector('#panel-new .form-control').select();
+    }, 100);
+  }
+
   $scope.keywords = function(url) {
     const searchParams = new URLSearchParams(url.split('?').pop());
     return searchParams.get('q');
@@ -48,11 +64,13 @@ app.controller('PopupCtrl', function($timeout, $scope) {
   $scope.clearSearch = function() {
     $scope.search = null;
     $scope.mode = null;
+    $scope.panelExpand = false;
   }
 
   $scope.editSearch = function(index) {
     $scope.search = { name: $scope.searches[index].name, index: index };
     $scope.mode = 'update';
+    $scope.panelExpand = true;
   }
 
   $scope.saveSearch = function() {
@@ -79,4 +97,4 @@ app.controller('PopupCtrl', function($timeout, $scope) {
     $scope.saveSearches();
     $scope.clearSearch();
   }
-});
+}]);
