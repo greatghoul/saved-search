@@ -71,6 +71,9 @@ app.controller('PopupCtrl', ['$timeout', '$scope', function($timeout, $scope) {
     $scope.search = { name: $scope.searches[index].name, index: index };
     $scope.mode = 'update';
     $scope.panelExpand = true;
+    $timeout(function () {
+      document.querySelector('#panel-edit .form-control').select();
+    }, 100);
   }
 
   $scope.saveSearch = function() {
