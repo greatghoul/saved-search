@@ -53,7 +53,7 @@ app.controller('PopupCtrl', ['$timeout', '$scope', function($timeout, $scope) {
 
   $scope.activeTab = function() {
     return new Promise((resolve, reject) => {
-      chrome.tabs.query({ active: true }, tabs => {
+      chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
         if (tabs && tabs.length > 0 && URL_PAT.test(tabs[0].url)) {
           resolve(tabs[0]);
         }
