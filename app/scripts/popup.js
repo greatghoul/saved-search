@@ -1,6 +1,8 @@
 // Preact popup implementation for Chrome Extension MV3, no build step
 import { html, render } from './packages/preact.mjs';
 import { useState, useEffect } from './packages/preact.mjs';
+import GettingStart from './components/GettingStart.js';
+
 
 const URL_PAT = /https?:\/\/www\.google\..*\/search\?.*/;
 
@@ -108,6 +110,10 @@ function Popup() {
     setSearch(null);
     setMode(null);
     setPanelExpand(false);
+  }
+
+  if (searches.length === 0) {
+    return html`<${GettingStart} />`;
   }
 
   return html`
