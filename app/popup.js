@@ -2,15 +2,12 @@
 import { html, render } from './packages/preact.mjs';
 import { useState, useEffect } from './packages/preact.mjs';
 import GettingStart from './components/GettingStart.js';
-
+import SearchActiveBar from './components/SearchActiveBar.js';
+import { i18n } from './utils.js';
 
 const URL_PAT = /https?:\/\/www\.google\..*\/search\?.*/;
 
-function i18n(key) {
-  return chrome.i18n.getMessage(key) || key;
-}
-
-function getActiveTabUrl() {
+function getActiveSearchUrl() {
   return new Promise((resolve) => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs && tabs.length > 0 && URL_PAT.test(tabs[0].url)) {
@@ -51,7 +48,7 @@ function Popup() {
 
   useEffect(() => {
     setSearches(loadSearches());
-    getActiveTabUrl().then((url) => {
+    getActiveSearchUrl().then((url) => {
       if (url) {
         const keywords = getKeywords(url);
         setSearch({ url, name: keywords, keywords });
@@ -112,12 +109,13 @@ function Popup() {
     setPanelExpand(false);
   }
 
-  if (searches.length === 0) {
+  if (searches.length === 0 && !search) {
     return html`<${GettingStart} />`;
   }
 
   return html`
     <div>
+      ${search && html`<${SearchActiveBar} search=${search} />`}
       <ul class="list-group list-searches">
         ${searches.map((savedSearch, i) => html`
           <li class="list-group-item" key=${i}>
@@ -155,14 +153,6 @@ function Popup() {
                   `)}
                 </ul>
               </div>
-            </div>
-          `}
-          ${!panelExpand && html`
-            <div class="panel-footer">
-              <div class="pull-right">
-                <button class="btn btn-default btn-xs" onClick=${() => setPanelExpand(true)}>${i18n('buttonShow')}</button>
-              </div>
-              <span class="truncate">${search ? search.name : ''}</span>
             </div>
           `}
         </div>

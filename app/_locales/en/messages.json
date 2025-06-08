@@ -23,10 +23,6 @@
     "message": "Create",
     "description": "Create button."
   },
-  "buttonShow": {
-    "message": "Show",
-    "description": "Show button."
-  },
   "buttonEdit": {
     "message": "Edit",
     "description": "Edit button."

@@ -13,7 +13,6 @@ body {
 
 #app {
   height: 100%;
-  display: flex;
 }
 
 .no-margin {
