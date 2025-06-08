@@ -1,0 +1,35 @@
+.getting-start-block {
+  padding: 32px 24px 24px 24px;
+  text-align: center;
+  color: #666;
+  background: #f8fafc;
+  margin: 0;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.getting-start-block .getting-start-icon-row {
+  margin-bottom: 18px;
+}
+.getting-start-block .icon {
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 4.5em;
+  margin: 0;
+}
+.getting-start-block h5 {
+  margin-bottom: 12px;
+  font-size: 1.5em;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+.getting-start-block p {
+  margin-bottom: 22px;
+  color: #888;
+}
+.getting-start-block .btn {
+  padding: 8px 22px;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.06);
+}

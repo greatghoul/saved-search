@@ -1,9 +1,19 @@
-@import '../css/components/GettingStart.css';
-
 html {
   width: 380px;
   height: 380px;
   padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-size: 14px;
+}
+
+#app {
+  height: 100%;
+  display: flex;
 }
 
 .no-margin {
