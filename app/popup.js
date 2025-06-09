@@ -144,6 +144,10 @@ function Popup() {
     setSearch(null);
     setMode(null);
   }
+  const handleDeleted = (deletedSearch) => {
+    const newSearches = searches.filter(s => s !== deletedSearch);
+    setSearches(newSearches);
+  };
 
   return html`
     <div>
@@ -161,6 +165,7 @@ function Popup() {
             key=${i}
             search=${savedSearch}
             onEdit=${() => handleEdit(i)}
+            onDeleted=${handleDeleted}
           />
         `)}
       </ul>
