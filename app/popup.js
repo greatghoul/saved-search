@@ -186,7 +186,6 @@ function Popup() {
           </div>
         </div>
       `}
-      ${panelExpand && html`<div class="modal-backdrop fade in" onClick=${handleClear}></div>`}
     </div>
   `;
 }
