@@ -169,37 +169,6 @@ function Popup() {
           />
         `)}
       </ul>
-      ${mode === 'create' && html`
-        <div class="panel panel-primary" id="panel-new">
-          ${panelExpand && html`
-            <div class="panel-body">
-              <div class="form-group">
-                <strong class="help-block">${i18n('textSearchNameHint')}</strong>
-                <input type="text" class="form-control" id="input-new" value=${search ? search.name : ''} onInput=${e => setSearch({ ...search, name: e.target.value })} />
-              </div>
-            </div>
-          `}
-          ${panelExpand && html`
-            <div class="panel-footer text-right">
-              <button class="btn btn-default btn-sm" onClick=${handleClear}>${i18n('buttonDismiss')}</button>
-              <button class="btn btn-primary btn-sm" onClick=${handleCreate}>${i18n('buttonCreate')}</button>
-              <div class="btn-group dropup" style="margin-left:8px;">
-                <button class="btn btn-primary btn-sm dropdown-toggle" tabIndex="-1">
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right" style="display:block;position:absolute;">
-                  <li class="dropdown-header">${i18n('textReplaceSavedSearch')}</li>
-                  ${searches.map((savedSearch, i) => html`
-                    <li key=${i}>
-                      <a href="#" class="truncate" onClick=${e => { e.preventDefault(); handleReplace(savedSearch); }}>${savedSearch.name}</a>
-                    </li>
-                  `)}
-                </ul>
-              </div>
-            </div>
-          `}
-        </div>
-      `}
       ${mode === 'update' && html`
         <div class="panel panel-primary" id="panel-edit">
           <div class="panel-body">
