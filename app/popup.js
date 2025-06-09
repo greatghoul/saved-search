@@ -29,16 +29,39 @@ function getKeywords(url) {
   }
 }
 
-function loadSearches() {
-  try {
-    return JSON.parse(localStorage.getItem('searches') || '[]');
-  } catch {
-    return [];
-  }
+/**
+ * Returns a new array of searches sorted alphabetically by the `name` property (case-insensitive).
+ *
+ * @param {Array<{ name?: string }>} searches - The array of search objects to sort.
+ * @returns {Array<{ name?: string }>} A new sorted array of search objects.
+ */
+function sortSearches(searches) {
+  return searches.slice().sort((a, b) => {
+    const nameA = (a.name || '').toLowerCase();
+    const nameB = (b.name || '').toLowerCase();
+    if (nameA < nameB) return -1;
+    if (nameA > nameB) return 1;
+    return 0;
+  });
 }
 
-function saveSearches(searches) {
-  localStorage.setItem('searches', JSON.stringify(searches));
+
+/**
+ * Loads saved searches from Chrome's local storage, filters them by keys starting with 'search-',
+ * sorts them using the `sortSearches` function, and returns the sorted array.
+ *
+ * @returns {Promise<Array<Object>>} A promise that resolves to an array of sorted search objects.
+ */
+function loadSearches() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(null, (items) => {
+      const searches = Object.keys(items)
+        .filter(key => key.startsWith('search-'))
+        .map(key => items[key]);
+      const sortedSearches = sortSearches(searches);
+      resolve(sortedSearches);
+    });
+  });
 }
 
 function Popup() {
@@ -51,7 +74,7 @@ function Popup() {
   const isCreateMode = mode === 'create';
 
   useEffect(() => {
-    setSearches(loadSearches());
+    loadSearches().then(setSearches);
     getActiveSearchUrl().then((url) => {
       if (url) {
         const keywords = getKeywords(url);
@@ -62,24 +85,21 @@ function Popup() {
 
   function handleCreate() {
     const newSearches = [...searches, search];
-    setSearches(newSearches);
-    saveSearches(newSearches);
+    const sortedSearches = sortSearches(newSearches);
+    setSearches(sortedSearches);
     setSearch(null);
     setMode(null);
-    setPanelExpand(false);
   }
 
   function handleEdit(index) {
     setSearch({ ...searches[index], index });
     setMode('update');
-    setPanelExpand(true);
   }
 
   function handleSave() {
     const newSearches = searches.slice();
     newSearches[search.index].name = search.name;
     setSearches(newSearches);
-    saveSearches(newSearches);
     setSearch(null);
     setMode(null);
     setPanelExpand(false);
@@ -89,7 +109,6 @@ function Popup() {
     const newSearches = searches.slice();
     newSearches.splice(search.index, 1);
     setSearches(newSearches);
-    saveSearches(newSearches);
     setSearch(null);
     setMode(null);
     setPanelExpand(false);
@@ -100,7 +119,6 @@ function Popup() {
       s === savedSearch ? { ...savedSearch, keywords: search.keywords, url: search.url } : s
     );
     setSearches(newSearches);
-    saveSearches(newSearches);
     setSearch(null);
     setMode(null);
     setPanelExpand(false);
@@ -119,11 +137,22 @@ function Popup() {
   // handlers
   const handleNewSearch = () => setMode('create');
   const handleCloseModal = () => setMode(null);
+  const handleCreated = (savedSearch) => {
+    const newSearches = [...searches, savedSearch];
+    setSearches(newSearches);
+    setSearch(null);
+    setMode(null);
+  }
 
   return html`
     <div>
       ${isNewSearch && !isCreateMode && html`<${SearchActiveBar} search=${search} onClick=${handleNewSearch} />`}
-      ${isNewSearch && isCreateMode && html`<${SearchModalNew} search=${search} searches=${searches} onCancel=${handleCloseModal} />`}
+      ${isNewSearch && isCreateMode && html`
+        <${SearchModalNew}
+          search=${search}
+          onCreated=${handleCreated}
+          onCancel=${handleCloseModal} />
+      `}
 
       <ul class="list-group list-searches">
         ${searches.map((savedSearch, i) => html`

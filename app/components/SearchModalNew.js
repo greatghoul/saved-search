@@ -1,7 +1,19 @@
-import { html } from '../packages/preact.mjs';
-import { i18n} from '../utils.js';
+import { html, useState } from '../packages/preact.mjs';
+import { i18n, createToken } from '../utils.js';
 
-const SearchModalNew = ({ search, searches, onCancel }) =>{
+const SearchModalNew = ({ search, onCancel, onCreated }) => {
+  const [name, setName] = useState(search.name);
+
+  const handleCreate = () => {
+    const id = createToken('search');
+    console.log('Generated token:', id);
+    const newSearch = { ...search, id, name };
+    chrome.storage.local.set({ [id]: newSearch }, () => {
+      console.log('Search saved to chrome.storage.local:', newSearch);
+      if (onCreated) onCreated(newSearch);
+    });
+  };
+
   return html`
     <div class="modal d-block">
       <div class="modal-dialog modal-fullscreen-sm-down">
@@ -11,7 +23,13 @@ const SearchModalNew = ({ search, searches, onCancel }) =>{
 
             <div class="mb-2">
               <label for="search-name" class="form-label">${i18n('searchName')}</label>
-              <input type="text" class="form-control" id="search-name" value=${search.name} />
+              <input
+                type="text"
+                class="form-control"
+                id="search-name"
+                value=${name}
+                onInput=${e => setName(e.target.value)}
+              />
               <div class="form-text">${i18n('textSearchNameHint')}</div>
             </div>
 
@@ -22,7 +40,7 @@ const SearchModalNew = ({ search, searches, onCancel }) =>{
           </div>
           <div class="modal-footer text-right">
             <button class="btn btn-light btn-sm" onClick=${onCancel}>${i18n('buttonDismiss')}</button>
-            <button class="btn btn-primary btn-sm">${i18n('buttonCreate')}</button>
+            <button class="btn btn-primary btn-sm" onClick=${handleCreate}>${i18n('buttonCreate')}</button>
           </div>
         </div><!-- .modal-content -->
       </div><!-- .modal-dialog -->

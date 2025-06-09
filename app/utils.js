@@ -9,3 +9,17 @@
 export function i18n(key) {
   return chrome.i18n.getMessage(key) || key;
 }
+
+/**
+ * Generates a time-based random token.
+ * Combines current timestamp with random values for uniqueness.
+ * Optionally adds a prefix to the token.
+ * @param {string} [prefix] - Optional prefix for the token.
+ * @returns {string} The generated token.
+ */
+export function createToken(prefix) {
+  const timestamp = Date.now().toString();
+  const random = Math.random().toString().substring(2, 10);
+  const token = `${timestamp}-${random}`;
+  return prefix ? `${prefix}-${token}` : token;
+}
