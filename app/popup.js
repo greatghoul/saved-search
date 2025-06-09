@@ -53,7 +53,7 @@ function sortSearches(searches) {
  *
  * @returns {Promise<Array<Object>>} A promise that resolves to an array of sorted search objects.
  */
-function loadSearches() {
+function fetchSearches() {
   return new Promise((resolve) => {
     chrome.storage.local.get(null, (items) => {
       const searches = Object.keys(items)
@@ -71,11 +71,15 @@ function Popup() {
   const [mode, setMode] = useState(null);
   const [panelExpand, setPanelExpand] = useState(false);
 
+  const activeSearches = searches.filter(s => !s.deletedAt);
+  const trashSearches = searches.filter(s => s.deletedAt);
   const isNewSearch = search && !search.id;
   const isCreateMode = mode === 'create';
 
+  const loadSearches = () => fetchSearches().then(setSearches);
+
   useEffect(() => {
-    loadSearches().then(setSearches);
+    loadSearches();
     getActiveSearchUrl().then((url) => {
       if (url) {
         const keywords = getKeywords(url);
@@ -138,16 +142,12 @@ function Popup() {
   // handlers
   const handleNewSearch = () => setMode('create');
   const handleCloseModal = () => setMode(null);
-  const handleCreated = (savedSearch) => {
-    const newSearches = [...searches, savedSearch];
-    setSearches(newSearches);
+  const handleCreated = () => {
+    loadSearches();
     setSearch(null);
     setMode(null);
   }
-  const handleDeleted = (deletedSearch) => {
-    const newSearches = searches.filter(s => s !== deletedSearch);
-    setSearches(newSearches);
-  };
+  const handleDeleted = () => loadSearches();
 
   return html`
     <nav class="navbar bg-primary-subtle navbar-sticky-top">
@@ -169,7 +169,7 @@ function Popup() {
     `}
 
     <ul class="list-group list-searches mb-1">
-      ${searches.map((savedSearch, i) => html`
+      ${activeSearches.map((savedSearch, i) => html`
         <${SearchItem}
           key=${i}
           search=${savedSearch}

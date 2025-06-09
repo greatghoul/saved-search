@@ -5,8 +5,12 @@ function SearchItem({ search, onEdit, onDeleted }) {
   function handleDelete(e) {
     e.preventDefault();
     e.stopPropagation();
-    chrome.storage.local.remove(search.id, () => {
-      onDeleted(search);
+    const deletedAt = new Date().toISOString();
+    chrome.storage.local.get([search.id], (result) => {
+      const deletedSearch = { ...result[search.id], deletedAt };
+      chrome.storage.local.set({ [search.id]: deletedSearch }, () => {
+        onDeleted(deletedSearch);
+      });
     });
   }
   function handleEdit(e) {
