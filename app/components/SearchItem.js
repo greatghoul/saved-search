@@ -15,17 +15,6 @@ function SearchItem({ search, onEdit, onDeleted }) {
     onEdit && onEdit();
   }
   function handleItemClick(e) {
-    // Only open if not clicking on edit/delete or the open icon
-    if (
-      e.target.closest('.search-actions') ||
-      (e.target.closest('a') && (
-        e.target.closest('a').classList.contains('text-primary-emphasis') ||
-        e.target.closest('a').classList.contains('text-danger')
-      ))
-    ) {
-      e.preventDefault();
-      return;
-    }
     window.open(search.url, '_blank', 'noopener');
   }
   return html`
