@@ -3,6 +3,7 @@ import { html, render } from './packages/preact.mjs';
 import { useState, useEffect } from './packages/preact.mjs';
 import GettingStart from './components/GettingStart.js';
 import SearchActiveBar from './components/SearchActiveBar.js';
+import SearchModalNew from './components/SearchModalNew.js';
 import { i18n } from './utils.js';
 
 const URL_PAT = /https?:\/\/www\.google\..*\/search\?.*/;
@@ -46,13 +47,15 @@ function Popup() {
   const [mode, setMode] = useState(null);
   const [panelExpand, setPanelExpand] = useState(false);
 
+  const isNewSearch = search && !search.id;
+  const isCreateMode = mode === 'create';
+
   useEffect(() => {
     setSearches(loadSearches());
     getActiveSearchUrl().then((url) => {
       if (url) {
         const keywords = getKeywords(url);
         setSearch({ url, name: keywords, keywords });
-        setMode('create');
       }
     });
   }, []);
@@ -113,9 +116,15 @@ function Popup() {
     return html`<${GettingStart} />`;
   }
 
+  // handlers
+  const handleNewSearch = () => setMode('create');
+  const handleCloseModal = () => setMode(null);
+
   return html`
     <div>
-      ${search && html`<${SearchActiveBar} search=${search} />`}
+      ${isNewSearch && !isCreateMode && html`<${SearchActiveBar} search=${search} onClick=${handleNewSearch} />`}
+      ${isNewSearch && isCreateMode && html`<${SearchModalNew} search=${search} searches=${searches} onCancel=${handleCloseModal} />`}
+
       <ul class="list-group list-searches">
         ${searches.map((savedSearch, i) => html`
           <li class="list-group-item" key=${i}>

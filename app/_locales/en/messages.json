@@ -42,5 +42,17 @@
   "textSearchNameHint": {
     "message": "Give this search a friendly name.",
     "description": "The hint of search name field."
+  },
+  "searchModalNewTitle": {
+    "message": "Save New Search",
+    "description": "The title of the new search modal."
+  },
+  "searchName": {
+    "message": "Search Name",
+    "description": "The label for the search name input field."
+  },
+  "searchKeywords": {
+    "message": "Search Keywords",
+    "description": "The label for the search keywords display block."
   }
 }

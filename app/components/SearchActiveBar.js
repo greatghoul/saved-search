@@ -1,7 +1,7 @@
 import { html } from '../packages/preact.mjs';
 import { i18n} from '../utils.js';
 
-function SearchActiveBar({ search }) {
+function SearchActiveBar({ search, onClick }) {
   return html`
     <nav class="navbar fixed-bottom bg-primary-subtle">
       <div class="container-fluid">
@@ -12,6 +12,7 @@ function SearchActiveBar({ search }) {
           <div class="col-auto">
             <button
               class="btn btn-outline-primary btn-sm"
+              onClick=${onClick}
             >
               ${i18n('buttonSave')}
             </button>
