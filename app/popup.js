@@ -150,43 +150,41 @@ function Popup() {
   };
 
   return html`
-    <div>
-      ${isNewSearch && !isCreateMode && html`<${SearchActiveBar} search=${search} onClick=${handleNewSearch} />`}
-      ${isNewSearch && isCreateMode && html`
-        <${SearchModalNew}
-          search=${search}
-          onCreated=${handleCreated}
-          onCancel=${handleCloseModal} />
-      `}
+    ${isNewSearch && !isCreateMode && html`<${SearchActiveBar} search=${search} onClick=${handleNewSearch} />`}
+    ${isNewSearch && isCreateMode && html`
+      <${SearchModalNew}
+        search=${search}
+        onCreated=${handleCreated}
+        onCancel=${handleCloseModal} />
+    `}
 
-      <ul class="list-group list-searches">
-        ${searches.map((savedSearch, i) => html`
-          <${SearchItem}
-            key=${i}
-            search=${savedSearch}
-            onEdit=${() => handleEdit(i)}
-            onDeleted=${handleDeleted}
-          />
-        `)}
-      </ul>
-      ${mode === 'update' && html`
-        <div class="panel panel-primary" id="panel-edit">
-          <div class="panel-body">
-            <div class="form-group">
-              <strong class="help-block">${i18n('textSearchNameHint')}</strong>
-              <input type="text" class="form-control" id="input-edit" value=${search ? search.name : ''} onInput=${e => setSearch({ ...search, name: e.target.value })} />
-            </div>
-          </div>
-          <div class="panel-footer text-right">
-            <button class="btn btn-default btn-sm" onClick=${handleClear}>${i18n('buttonDismiss')}</button>
-            <button class="btn btn-primary btn-sm" onClick=${handleSave}>${i18n('buttonSave')}</button>
-            <div class="pull-left">
-              <button class="btn btn-danger btn-sm" onClick=${handleRemove}>${i18n('buttonDelete')}</button>
-            </div>
+    <ul class="list-group list-searches">
+      ${searches.map((savedSearch, i) => html`
+        <${SearchItem}
+          key=${i}
+          search=${savedSearch}
+          onEdit=${() => handleEdit(i)}
+          onDeleted=${handleDeleted}
+        />
+      `)}
+    </ul>
+    ${mode === 'update' && html`
+      <div class="panel panel-primary" id="panel-edit">
+        <div class="panel-body">
+          <div class="form-group">
+            <strong class="help-block">${i18n('textSearchNameHint')}</strong>
+            <input type="text" class="form-control" id="input-edit" value=${search ? search.name : ''} onInput=${e => setSearch({ ...search, name: e.target.value })} />
           </div>
         </div>
-      `}
-    </div>
+        <div class="panel-footer text-right">
+          <button class="btn btn-default btn-sm" onClick=${handleClear}>${i18n('buttonDismiss')}</button>
+          <button class="btn btn-primary btn-sm" onClick=${handleSave}>${i18n('buttonSave')}</button>
+          <div class="pull-left">
+            <button class="btn btn-danger btn-sm" onClick=${handleRemove}>${i18n('buttonDelete')}</button>
+          </div>
+        </div>
+      </div>
+    `}
   `;
 }
 
