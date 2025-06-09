@@ -1,0 +1,17 @@
+.search-item .search-keywords {
+  font-size: 0.85em;
+  color: #888;
+  word-break: break-all;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.search-item:hover .search-keywords {
+  display: block !important;
+  opacity: 1;
+  animation: fadeIn 0.2s;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
