@@ -4,6 +4,7 @@ import { useState, useEffect } from './packages/preact.mjs';
 import GettingStart from './components/GettingStart.js';
 import SearchActiveBar from './components/SearchActiveBar.js';
 import SearchModalNew from './components/SearchModalNew.js';
+import SearchItem from './components/SearchItem.js';
 import { i18n } from './utils.js';
 
 const URL_PAT = /https?:\/\/www\.google\..*\/search\?.*/;
@@ -156,12 +157,11 @@ function Popup() {
 
       <ul class="list-group list-searches">
         ${searches.map((savedSearch, i) => html`
-          <li class="list-group-item" key=${i}>
-            <div class="pull-right">
-              <button class="btn btn-default btn-xs" onClick=${() => handleEdit(i)}>${i18n('buttonEdit')}</button>
-            </div>
-            <a href=${savedSearch.url} target="_blank" class="search-name truncate">${savedSearch.name}</a>
-          </li>
+          <${SearchItem}
+            key=${i}
+            search=${savedSearch}
+            onEdit=${() => handleEdit(i)}
+          />
         `)}
       </ul>
       ${mode === 'create' && html`
