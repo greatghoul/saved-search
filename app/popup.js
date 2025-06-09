@@ -69,7 +69,6 @@ function Popup() {
   const [searches, setSearches] = useState([]);
   const [search, setSearch] = useState(null);
   const [mode, setMode] = useState(null);
-  const [panelExpand, setPanelExpand] = useState(false);
 
   const activeSearches = searches.filter(s => !s.deletedAt);
   const trashSearches = searches.filter(s => s.deletedAt);
@@ -107,7 +106,6 @@ function Popup() {
     setSearches(newSearches);
     setSearch(null);
     setMode(null);
-    setPanelExpand(false);
   }
 
   function handleRemove() {
@@ -116,7 +114,6 @@ function Popup() {
     setSearches(newSearches);
     setSearch(null);
     setMode(null);
-    setPanelExpand(false);
   }
 
   function handleReplace(savedSearch) {
@@ -126,13 +123,11 @@ function Popup() {
     setSearches(newSearches);
     setSearch(null);
     setMode(null);
-    setPanelExpand(false);
   }
 
   function handleClear() {
     setSearch(null);
     setMode(null);
-    setPanelExpand(false);
   }
 
   if (searches.length === 0 && !search) {
