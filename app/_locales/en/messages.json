@@ -56,7 +56,7 @@
     "description": "The label for the search keywords display block."
   },
   "searchItemOpen": {
-    "message": "Open the search URL",
+    "message": "Click to open the search URL",
     "description": "The label for the search item open link."
   }
 }
