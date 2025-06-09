@@ -3,7 +3,7 @@ import { i18n} from '../utils.js';
 
 function SearchActiveBar({ search, onClick }) {
   return html`
-    <nav class="navbar fixed-bottom bg-primary-subtle">
+    <nav class="navbar bg-info-subtle">
       <div class="container-fluid">
         <div class="row g-0 w-100 align-items-center justify-content-between">
           <div class="col text-truncate">

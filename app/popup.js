@@ -150,6 +150,16 @@ function Popup() {
   };
 
   return html`
+    <nav class="navbar bg-primary-subtle navbar-sticky-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <span class="navbar-brand fs-6 d-flex align-items-center text-primary-emphasis">
+            <img src="images/icon-48.png" alt="Logo" class="me-1" style="height: 20px;" />
+            <span class="text-uppercase">${i18n('appName')}</span>
+          </span>
+        </div>
+      </div>
+    </nav>
     ${isNewSearch && !isCreateMode && html`<${SearchActiveBar} search=${search} onClick=${handleNewSearch} />`}
     ${isNewSearch && isCreateMode && html`
       <${SearchModalNew}
@@ -158,7 +168,7 @@ function Popup() {
         onCancel=${handleCloseModal} />
     `}
 
-    <ul class="list-group list-searches">
+    <ul class="list-group list-searches mb-1">
       ${searches.map((savedSearch, i) => html`
         <${SearchItem}
           key=${i}
