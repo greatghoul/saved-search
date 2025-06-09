@@ -6,8 +6,14 @@ const SearchModalNew = ({ search, onCancel, onCreated }) => {
 
   const handleCreate = () => {
     const id = createToken('search');
-    console.log('Generated token:', id);
-    const newSearch = { ...search, id, name };
+    const now = new Date().toISOString();
+    const newSearch = { 
+      ...search, 
+      id, 
+      name, 
+      createdAt: now,
+      updatedAt: now
+    };
     chrome.storage.local.set({ [id]: newSearch }, () => {
       console.log('Search saved to chrome.storage.local:', newSearch);
       if (onCreated) onCreated(newSearch);
