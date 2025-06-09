@@ -3,18 +3,16 @@ import { i18n } from '../utils.js';
 
 function SearchItem({ search, onEdit }) {
   return html`
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-      <a
-        href=${search.url}
-        target="_blank"
-        class="text-truncate"
-        title=${search.name}
-      >
-        ${search.name}
-      </a>
-      <button class="btn btn-outline-success btn-sm" onClick=${onEdit}>
-        ${i18n('buttonEdit')}
-      </button>
+    <li class="list-group-item d-flex flex-column align-items-start search-item">
+      <div class="d-flex w-100 justify-content-between align-items-center">
+        <span class="text-secondary-emphasis text-truncate" title=${search.name}>${search.name}</span>
+        <a class="text-success" href="#" onClick=${onEdit}>
+          <i class="bi bi-box-arrow-up-right"></i>
+        </a>
+      </div>
+      <div class="search-keywords text-body-secondary small mt-1 w-100" style="display:none;">
+        ${search.keywords || ''}
+      </div>
     </li>
   `;
 }
