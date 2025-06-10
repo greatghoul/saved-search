@@ -88,7 +88,7 @@
     "description": "Tooltip for the trash button in the popup header."
   },
   "searchModalTrashTitle": {
-    "message": "Trash",
+    "message": "Deleted Searches",
     "description": "The title of the trash modal."
   },
   "searchModalTrashHint": {

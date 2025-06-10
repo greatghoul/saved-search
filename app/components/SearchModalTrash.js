@@ -1,6 +1,6 @@
 import { html } from '../packages/preact.mjs';
 import message from '../packages/message.js';
-import { i18n } from '../utils.js';
+import { i18n, daysAgo, formatLocalDateTime } from '../utils.js';
 
 const SearchModalTrash = ({ trashSearches, onRestore, onCancel }) => {
   const handleRestore = (deletedSearch) => {
@@ -35,10 +35,11 @@ const SearchModalTrash = ({ trashSearches, onRestore, onCancel }) => {
                   <div class="text-center text-body-secondary py-3">${i18n('searchModalTrashEmpty')}</div>
                 ` : trashSearches.map(deletedSearch => html`
                   <a href="#"
-                    class="list-group-item list-group-item-action d-flex"
+                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
                     onClick=${() => handleRestore(deletedSearch)}
                   >
                     <span class="text-truncate" title=${deletedSearch.name}>${deletedSearch.name}</span>
+                    <span class="text-secondary text-nowrap ms-2" title=${formatLocalDateTime(deletedSearch.deletedAt)}>${daysAgo(deletedSearch.deletedAt)}</span>
                   </a>
                 `)}
               </div>
