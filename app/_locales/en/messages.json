@@ -35,6 +35,10 @@
     "message": "Delete",
     "description": "Delete button."
   },
+  "buttonSaveTo": {
+    "message": "Save To",
+    "description": "Save to button."
+  },
   "textReplaceSavedSearch": {
     "message": "Replace a saved search",
     "description": "Description to replace a saved search item."
@@ -50,6 +54,14 @@
   "searchModalEditTitle": {
     "message": "Edit Search",
     "description": "The title of the edit search modal."
+  },
+  "searchModalReplaceTitle": {
+    "message": "Save to Search",
+    "description": "The title of the replace search modal."
+  },
+  "searchModalReplaceHint": {
+    "message": "Save current search to an existing one.",
+    "description": "The hint for replacing a saved search."
   },
   "searchName": {
     "message": "Search Name",

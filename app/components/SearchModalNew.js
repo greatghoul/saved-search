@@ -1,7 +1,7 @@
 import { html, useState } from '../packages/preact.mjs';
 import { i18n, createToken } from '../utils.js';
 
-const SearchModalNew = ({ search, onCancel, onCreated }) => {
+const SearchModalNew = ({ search, onCancel, onCreated, onSaveTo }) => {
   const [name, setName] = useState(search.name);
 
   const handleCreate = () => {
@@ -47,6 +47,7 @@ const SearchModalNew = ({ search, onCancel, onCreated }) => {
           <div class="modal-footer text-right">
             <button class="btn btn-light btn-sm" onClick=${onCancel}>${i18n('buttonDismiss')}</button>
             <button class="btn btn-primary btn-sm" onClick=${handleCreate}>${i18n('buttonSave')}</button>
+            <button class="btn btn-secondary btn-sm me-2" onClick=${onSaveTo}>${i18n('buttonSaveTo')}</button>
           </div>
         </div><!-- .modal-content -->
       </div><!-- .modal-dialog -->

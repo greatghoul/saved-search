@@ -5,6 +5,7 @@ import GettingStart from './components/GettingStart.js';
 import SearchActiveBar from './components/SearchActiveBar.js';
 import SearchModalNew from './components/SearchModalNew.js';
 import SearchModalEdit from './components/SearchModalEdit.js';
+import SearchModalReplace from './components/SearchModalReplace.js';
 import SearchItem from './components/SearchItem.js';
 import { i18n } from './utils.js';
 
@@ -104,6 +105,7 @@ function Popup() {
     setSearch(null);
     setMode(null);
   }
+  const handleOpenReplace = () => setMode('replace');
 
   return html`
     <nav class="navbar bg-primary-subtle navbar-sticky-top">
@@ -125,13 +127,23 @@ function Popup() {
       <${SearchModalNew}
         search=${search}
         onCreated=${handleRefresh}
-        onCancel=${handleCloseModal} />
+        onCancel=${handleCloseModal}
+        onSaveTo=${handleOpenReplace}
+      />
     `}
     ${isSavedSearch && mode === 'update' && html`
       <${SearchModalEdit}
         search=${search}
         onUpdated=${handleRefresh}
         onCancel=${handleCloseModal} />
+    `}
+    ${isNewSearch && mode === 'replace' && html`
+      <${SearchModalReplace}
+        activeSearches=${activeSearches}
+        search=${search}
+        onReplace=${handleRefresh}
+        onCancel=${handleCloseModal}
+      />
     `}
     <ul class="list-group list-searches mb-1">
       ${activeSearches.map((savedSearch, i) => html`
