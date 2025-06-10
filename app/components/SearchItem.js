@@ -1,8 +1,20 @@
-import { html } from '../packages/preact.mjs';
+import { html, useEffect, useState } from '../packages/preact.mjs';
 import message from '../packages/message.js';
 import { i18n } from '../utils.js';
 
 const SearchItem = ({ search, onEdit, onDeleted }) => {
+  const [isFresh, setIsFresh] = useState(false);
+
+  useEffect(() => {
+    if (search.updatedAt) {
+      const updated = (Date.now() - new Date(search.updatedAt).getTime()) <= 5000;
+      setIsFresh(updated);
+      setTimeout(() => setIsFresh(false), 2000);
+    } else {
+      setIsFresh(false);
+    }
+  }, [search.updatedAt]);
+
   const handleDelete = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -25,7 +37,11 @@ const SearchItem = ({ search, onEdit, onDeleted }) => {
     window.open(search.url, '_blank', 'noopener');
   };
   return html`
-    <li class="list-group-item d-flex flex-column align-items-start search-item" title=${i18n('searchItemOpen')} onClick=${handleItemClick}>
+    <li
+      class="list-group-item d-flex flex-column align-items-start search-item ${isFresh ? 'bg-warning-subtle' : ''}"
+      title=${i18n('searchItemOpen')}
+      onClick=${handleItemClick}
+    >
       <div class="d-flex w-100 justify-content-between align-items-center">
         <span class="text-secondary-emphasis text-truncate" title=${search.name}>${search.name}</span>
         <a class="text-success" href="#">
