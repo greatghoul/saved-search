@@ -7,6 +7,7 @@ import SearchModalNew from './components/SearchModalNew.js';
 import SearchModalEdit from './components/SearchModalEdit.js';
 import SearchModalReplace from './components/SearchModalReplace.js';
 import SearchItem from './components/SearchItem.js';
+import SearchModalTrash from './components/SearchModalTrash.js';
 import { i18n } from './utils.js';
 
 const URL_PAT = /https?:\/\/www\.google\..*\/search\?.*/;
@@ -106,6 +107,7 @@ function Popup() {
     setMode(null);
   }
   const handleOpenReplace = () => setMode('replace');
+  const handleOpenTrash = () => setMode('trash');
 
   const TrashButton = () => {
     return html`
@@ -113,6 +115,7 @@ function Popup() {
         type="button"
         class="btn btn-outline-dark btn-sm d-flex align-items-center"
         title=${i18n('tooltipTrashButton')}
+        onClick=${handleOpenTrash}
       >
         <i class="bi bi-trash"></i>
         <span class="ms-1">${trashSearches.length}</span>
@@ -156,6 +159,13 @@ function Popup() {
         activeSearches=${activeSearches}
         search=${search}
         onReplace=${handleRefresh}
+        onCancel=${handleCloseModal}
+      />
+    `}
+    ${mode === 'trash' && html`
+      <${SearchModalTrash}
+        trashSearches=${trashSearches}
+        onRestore=${handleRefresh}
         onCancel=${handleCloseModal}
       />
     `}

@@ -82,5 +82,21 @@
   "tooltipTrashButton": {
     "message": "View deleted searches.",
     "description": "Tooltip for the trash button in the popup header."
+  },
+  "searchModalTrashTitle": {
+    "message": "Trash",
+    "description": "The title of the trash modal."
+  },
+  "searchModalTrashHint": {
+    "message": "Click an item to restore it.",
+    "description": "Hint for restoring deleted searches."
+  },
+  "searchModalTrashEmpty": {
+    "message": "Trash is empty.",
+    "description": "Message when trash is empty."
+  },
+  "searchRestoredSuccess": {
+    "message": "Search restored successfully!",
+    "description": "Success message when a search is restored from trash."
   }
 }
