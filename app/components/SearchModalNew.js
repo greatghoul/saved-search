@@ -47,7 +47,7 @@ const SearchModalNew = ({ search, onCancel, onCreated, onSaveTo }) => {
           <div class="modal-footer text-right">
             <button class="btn btn-light btn-sm" onClick=${onCancel}>${i18n('buttonDismiss')}</button>
             <button class="btn btn-primary btn-sm" onClick=${handleCreate}>${i18n('buttonSave')}</button>
-            <button class="btn btn-secondary btn-sm me-2" onClick=${onSaveTo}>${i18n('buttonSaveTo')}</button>
+            <button class="btn btn-success btn-sm me-2" onClick=${onSaveTo}>${i18n('buttonSaveTo')}</button>
           </div>
         </div><!-- .modal-content -->
       </div><!-- .modal-dialog -->
