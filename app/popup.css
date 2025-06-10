@@ -1,0 +1,6 @@
+@import url('../packages/bootstrap.min.css');
+@import url('../packages/message.css');
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css");
+@import url('../components/PopupApp.css');
+@import url('../components/GettingStart.css');
+@import url('../components/SearchItem.css');

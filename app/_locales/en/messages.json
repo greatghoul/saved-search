@@ -23,10 +23,6 @@
     "message": "Create",
     "description": "Create button."
   },
-  "buttonShow": {
-    "message": "Show",
-    "description": "Show button."
-  },
   "buttonEdit": {
     "message": "Edit",
     "description": "Edit button."
@@ -39,12 +35,76 @@
     "message": "Delete",
     "description": "Delete button."
   },
-  "textReplaceSavedSearch": {
-    "message": "Replace a saved search",
-    "description": "Description to replace a saved search item."
+  "buttonSaveTo": {
+    "message": "Save To",
+    "description": "Save to button."
+  },
+  "buttonClearTrash": {
+    "message": "Clear Trash",
+    "description": "Button to clear all items in trash."
   },
   "textSearchNameHint": {
     "message": "Give this search a friendly name.",
     "description": "The hint of search name field."
+  },
+  "searchModalNewTitle": {
+    "message": "Save New Search",
+    "description": "The title of the new search modal."
+  },
+  "searchModalEditTitle": {
+    "message": "Edit Search",
+    "description": "The title of the edit search modal."
+  },
+  "searchModalReplaceTitle": {
+    "message": "Save to Search",
+    "description": "The title of the replace search modal."
+  },
+  "searchModalReplaceHint": {
+    "message": "Select an existing search to update its details with the current search.",
+    "description": "The hint for replacing a saved search."
+  },
+  "searchName": {
+    "message": "Search Name",
+    "description": "The label for the search name input field."
+  },
+  "searchKeywords": {
+    "message": "Search Keywords",
+    "description": "The label for the search keywords display block."
+  },
+  "searchItemOpen": {
+    "message": "Click to open the search URL",
+    "description": "The label for the search item open link."
+  },
+  "searchSavedSuccess": {
+    "message": "Search saved successfully!",
+    "description": "Success message when a search is saved."
+  },
+  "searchDeletedSuccess": {
+    "message": "Search deleted successfully!",
+    "description": "Success message when a search is deleted."
+  },
+  "tooltipTrashButton": {
+    "message": "View deleted searches.",
+    "description": "Tooltip for the trash button in the popup header."
+  },
+  "searchModalTrashTitle": {
+    "message": "Deleted Searches",
+    "description": "The title of the trash modal."
+  },
+  "searchModalTrashHint": {
+    "message": "Click an item to restore it.",
+    "description": "Hint for restoring deleted searches."
+  },
+  "searchModalTrashEmpty": {
+    "message": "Trash is empty.",
+    "description": "Message when trash is empty."
+  },
+  "searchRestoredSuccess": {
+    "message": "Search restored successfully!",
+    "description": "Success message when a search is restored from trash."
+  },
+  "searchTrashCleared": {
+    "message": "Trash cleared!",
+    "description": "Success message when trash is cleared."
   }
 }

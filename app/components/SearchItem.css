@@ -1,0 +1,36 @@
+.search-item .search-keywords {
+  font-size: 0.85em;
+  color: #888;
+  word-break: break-all;
+  display: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  max-height: 2.8em;
+  line-height: 1.4em;
+}
+.search-item:hover .search-keywords {
+  display: -webkit-box !important;
+}
+.search-item .search-actions {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  font-size: 0.97em;
+}
+.search-item:hover .search-actions {
+  display: block !important;
+  opacity: 1;
+  animation: fadeIn 0.2s;
+}
+.search-item .search-actions a {
+  margin-right: 1.2em;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.search-item .search-actions a:last-child {
+  margin-right: 0;
+}

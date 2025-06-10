@@ -1,9 +1,18 @@
-@import "bootstrap_custom";
-
 html {
   width: 380px;
   height: 380px;
   padding: 0;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-size: 14px;
+}
+
+#app {
+  height: 100%;
 }
 
 .no-margin {
@@ -34,17 +43,17 @@ html {
   overflow-y: auto;
   max-height: 380px;
   margin-bottom: 0;
+}
 
-  .list-group-item {
-    border-radius: 0;
+.list-searches .list-group-item {
+  border-radius: 0;
+}
 
-    &:hover {
-      color: #555;
-      text-decoration: none;
-      background-color: #f5f5f5;
-      cursor: pointer;
-    }
-  }
+.list-searches .list-group-item:hover {
+  color: #555;
+  text-decoration: none;
+  background-color: #f5f5f5;
+  cursor: pointer;
 }
 
 .panel-primary {
@@ -60,7 +69,8 @@ html {
   max-width: 240px;
 }
 
-.form-group, .help-block {
+.form-group,
+.help-block {
   margin-top: 0;
   margin-bottom: 0;
 }

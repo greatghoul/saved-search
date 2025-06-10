@@ -2,8 +2,8 @@
   "name": "__MSG_appName__",
   "short_name": "__MSG_appShortName__",
   "description": "__MSG_appDescription__",
-  "version": "1.0.2",
-  "manifest_version": 2,
+  "version": "1.1.0",
+  "manifest_version": 3,
   "default_locale": "en",
   "icons": {
     "16": "images/icon-16.png",
@@ -11,25 +11,18 @@
     "128": "images/icon-128.png"
   },
   "background": {
-    "scripts": [
-      "scripts/background.js"
-    ]
+    "service_worker": "background.js"
   },
-  "browser_action": {
+  "action": {
     "default_icon": {
       "16": "images/icon-16.png",
       "48": "images/icon-48.png"
     },
     "default_title": "__MSG_browserActionTitle__",
-    "default_popup": "pages/popup.html"
+    "default_popup": "popup.html"
   },
   "permissions": [
-    "activeTab"
-  ],
-  "__firefox__applications": {
-    "gecko": {
-      "id": "4090A368-CAF6-11E7-B7BD-EC04CB11D2E8",
-      "strict_min_version": "45.0"
-    }
-  }
+    "activeTab",
+    "storage"
+  ]
 }
