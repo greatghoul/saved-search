@@ -1,14 +1,18 @@
-import { html, useEffect, useState } from '../packages/preact.mjs';
+import { html, useEffect, useState, useRef } from '../packages/preact.mjs';
 import message from '../packages/message.js';
 import { i18n } from '../utils.js';
 
 const SearchItem = ({ search, onEdit, onDeleted }) => {
   const [isFresh, setIsFresh] = useState(false);
+  const itemRef = useRef(null);
 
   useEffect(() => {
     if (search.updatedAt) {
       const updated = (Date.now() - new Date(search.updatedAt).getTime()) <= 5000;
       setIsFresh(updated);
+      if (updated && itemRef.current) {
+        itemRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
       setTimeout(() => setIsFresh(false), 2000);
     } else {
       setIsFresh(false);
@@ -40,6 +44,7 @@ const SearchItem = ({ search, onEdit, onDeleted }) => {
     <li
       class="list-group-item d-flex flex-column align-items-start search-item ${isFresh ? 'bg-warning-subtle' : ''}"
       title=${i18n('searchItemOpen')}
+      ref=${itemRef}
       onClick=${handleItemClick}
     >
       <div class="d-flex w-100 justify-content-between align-items-center">
