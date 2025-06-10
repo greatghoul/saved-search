@@ -11,9 +11,11 @@ function GettingStart() {
         <span class="icon">🔍</span>
       </div>
       <h5>No saved searches yet</h5>
-      <p>
-        Start by searching something on Google and save it here for quick access later.
-      </p>
+      <ol class="text-start">
+        <li>Search for something on Google and stay on the search results page.</li>
+        <li>Click the extension icon in your browser toolbar.</li>
+        <li>Click the "Save" button to save your search.</li>
+      </ol>
       <button class="btn btn-primary" onClick=${goToGoogle}>Go to Google Search</button>
     </div>
   `;

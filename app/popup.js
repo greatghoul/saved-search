@@ -90,7 +90,7 @@ function Popup() {
     });
   }, []);
 
-  if (searches.length === 0 && !search) {
+  if (activeSearches.length === 0 && !search) {
     return html`<${GettingStart} />`;
   }
 
