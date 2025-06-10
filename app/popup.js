@@ -107,15 +107,29 @@ function Popup() {
   }
   const handleOpenReplace = () => setMode('replace');
 
+  const TrashButton = () => {
+    return html`
+      <button
+        type="button"
+        class="btn btn-outline-dark btn-sm d-flex align-items-center"
+        title=${i18n('tooltipTrashButton')}
+      >
+        <i class="bi bi-trash"></i>
+        <span class="ms-1">${trashSearches.length}</span>
+      </button>
+    `;
+  }
+
   return html`
     <nav class="navbar bg-primary-subtle navbar-sticky-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
+      <div class="container-fluid d-flex align-items-center justify-content-between">
+        <div class="navbar-header d-flex align-items-center">
           <span class="navbar-brand fs-6 d-flex align-items-center text-primary-emphasis">
             <img src="images/icon-48.png" alt="Logo" class="me-1" style="height: 20px;" />
             <span class="text-uppercase">${i18n('appName')}</span>
           </span>
         </div>
+        ${trashSearches.length > 0 && html`<${TrashButton} />`}
       </div>
     </nav>
     ${isNewSearch && !mode && html`

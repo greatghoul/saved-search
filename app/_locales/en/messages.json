@@ -78,5 +78,9 @@
   "searchDeletedSuccess": {
     "message": "Search deleted successfully!",
     "description": "Success message when a search is deleted."
+  },
+  "tooltipTrashButton": {
+    "message": "View deleted searches.",
+    "description": "Tooltip for the trash button in the popup header."
   }
 }
