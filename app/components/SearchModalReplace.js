@@ -21,19 +21,16 @@ const SearchModalReplace = ({ activeSearches, search, onReplace, onCancel }) => 
             <h5>${i18n('searchModalReplaceTitle')}</h5>
             <div class="mb-2">
               <div class="form-text mb-2">${i18n('searchModalReplaceHint')}</div>
-              <ul class="list-group">
+              <div class="list-group">
                 ${activeSearches.map(savedSearch => html`
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <a href="#"
+                    class="list-group-item list-group-item-action d-flex"
+                    onClick=${() => handleReplace(savedSearch)}
+                  >
                     <span class="text-truncate" title=${savedSearch.name}>${savedSearch.name}</span>
-                    <button
-                      class="btn btn-outline-primary btn-sm text-nowrap"
-                      onClick=${() => handleReplace(savedSearch)}
-                    >
-                      ${i18n('buttonSaveTo')}
-                    </button>
-                  </li>
+                  </a>
                 `)}
-              </ul>
+              </div>
             </div>
           </div>
           <div class="modal-footer text-right">
