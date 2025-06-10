@@ -12,6 +12,16 @@ const SearchModalTrash = ({ trashSearches, onRestore, onCancel }) => {
       if (onRestore) onRestore();
     });
   };
+
+  const handleClearTrash = () => {
+    if (trashSearches.length === 0) return;
+    const ids = trashSearches.map(s => s.id);
+    chrome.storage.local.remove(ids, () => {
+      message.success(i18n('searchTrashCleared'));
+      if (onRestore) onRestore();
+    });
+  };
+
   return html`
     <div class="modal d-block">
       <div class="modal-dialog modal-fullscreen-sm-down">
@@ -36,6 +46,7 @@ const SearchModalTrash = ({ trashSearches, onRestore, onCancel }) => {
           </div>
           <div class="modal-footer text-right">
             <button class="btn btn-light btn-sm" onClick=${onCancel}>${i18n('buttonDismiss')}</button>
+            <button class="btn btn-danger btn-sm me-2" onClick=${handleClearTrash} disabled=${trashSearches.length === 0}>${i18n('buttonClearTrash')}</button>
           </div>
         </div>
       </div>

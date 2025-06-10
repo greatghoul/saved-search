@@ -39,6 +39,10 @@
     "message": "Save To",
     "description": "Save to button."
   },
+  "buttonClearTrash": {
+    "message": "Clear Trash",
+    "description": "Button to clear all items in trash."
+  },
   "textSearchNameHint": {
     "message": "Give this search a friendly name.",
     "description": "The hint of search name field."
@@ -98,5 +102,9 @@
   "searchRestoredSuccess": {
     "message": "Search restored successfully!",
     "description": "Success message when a search is restored from trash."
+  },
+  "searchTrashCleared": {
+    "message": "Trash cleared!",
+    "description": "Success message when trash is cleared."
   }
 }
