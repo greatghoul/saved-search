@@ -4,6 +4,7 @@ import { useState, useEffect } from './packages/preact.mjs';
 import GettingStart from './components/GettingStart.js';
 import SearchActiveBar from './components/SearchActiveBar.js';
 import SearchModalNew from './components/SearchModalNew.js';
+import SearchModalEdit from './components/SearchModalEdit.js';
 import SearchItem from './components/SearchItem.js';
 import { i18n } from './utils.js';
 
@@ -73,7 +74,7 @@ function Popup() {
   const activeSearches = searches.filter(s => !s.deletedAt);
   const trashSearches = searches.filter(s => s.deletedAt);
   const isNewSearch = search && !search.id;
-  const isCreateMode = mode === 'create';
+  const isSavedSearch = search && search.id;
 
   const loadSearches = () => fetchSearches().then(setSearches);
 
@@ -87,49 +88,6 @@ function Popup() {
     });
   }, []);
 
-  function handleCreate() {
-    const newSearches = [...searches, search];
-    const sortedSearches = sortSearches(newSearches);
-    setSearches(sortedSearches);
-    setSearch(null);
-    setMode(null);
-  }
-
-  function handleEdit(index) {
-    setSearch({ ...searches[index], index });
-    setMode('update');
-  }
-
-  function handleSave() {
-    const newSearches = searches.slice();
-    newSearches[search.index].name = search.name;
-    setSearches(newSearches);
-    setSearch(null);
-    setMode(null);
-  }
-
-  function handleRemove() {
-    const newSearches = searches.slice();
-    newSearches.splice(search.index, 1);
-    setSearches(newSearches);
-    setSearch(null);
-    setMode(null);
-  }
-
-  function handleReplace(savedSearch) {
-    const newSearches = searches.map((s) =>
-      s === savedSearch ? { ...savedSearch, keywords: search.keywords, url: search.url } : s
-    );
-    setSearches(newSearches);
-    setSearch(null);
-    setMode(null);
-  }
-
-  function handleClear() {
-    setSearch(null);
-    setMode(null);
-  }
-
   if (searches.length === 0 && !search) {
     return html`<${GettingStart} />`;
   }
@@ -137,12 +95,15 @@ function Popup() {
   // handlers
   const handleNewSearch = () => setMode('create');
   const handleCloseModal = () => setMode(null);
-  const handleCreated = () => {
+  const handleEdit = search => {
+    setSearch(search);
+    setMode('update');
+  };
+  const handleRefresh = () => {
     loadSearches();
     setSearch(null);
     setMode(null);
   }
-  const handleDeleted = () => loadSearches();
 
   return html`
     <nav class="navbar bg-primary-subtle navbar-sticky-top">
@@ -155,41 +116,33 @@ function Popup() {
         </div>
       </div>
     </nav>
-    ${isNewSearch && !isCreateMode && html`<${SearchActiveBar} search=${search} onClick=${handleNewSearch} />`}
-    ${isNewSearch && isCreateMode && html`
+    ${isNewSearch && !mode && html`
+      <${SearchActiveBar}
+        search=${search}
+        onClick=${handleNewSearch} />
+    `}
+    ${isNewSearch && mode === 'create' && html`
       <${SearchModalNew}
         search=${search}
-        onCreated=${handleCreated}
+        onCreated=${handleRefresh}
         onCancel=${handleCloseModal} />
     `}
-
+    ${isSavedSearch && mode === 'update' && html`
+      <${SearchModalEdit}
+        search=${search}
+        onUpdated=${handleRefresh}
+        onCancel=${handleCloseModal} />
+    `}
     <ul class="list-group list-searches mb-1">
       ${activeSearches.map((savedSearch, i) => html`
         <${SearchItem}
           key=${i}
           search=${savedSearch}
-          onEdit=${() => handleEdit(i)}
-          onDeleted=${handleDeleted}
+          onEdit=${handleEdit}
+          onDeleted=${handleRefresh}
         />
       `)}
     </ul>
-    ${mode === 'update' && html`
-      <div class="panel panel-primary" id="panel-edit">
-        <div class="panel-body">
-          <div class="form-group">
-            <strong class="help-block">${i18n('textSearchNameHint')}</strong>
-            <input type="text" class="form-control" id="input-edit" value=${search ? search.name : ''} onInput=${e => setSearch({ ...search, name: e.target.value })} />
-          </div>
-        </div>
-        <div class="panel-footer text-right">
-          <button class="btn btn-default btn-sm" onClick=${handleClear}>${i18n('buttonDismiss')}</button>
-          <button class="btn btn-primary btn-sm" onClick=${handleSave}>${i18n('buttonSave')}</button>
-          <div class="pull-left">
-            <button class="btn btn-danger btn-sm" onClick=${handleRemove}>${i18n('buttonDelete')}</button>
-          </div>
-        </div>
-      </div>
-    `}
   `;
 }
 

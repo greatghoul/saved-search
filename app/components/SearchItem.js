@@ -1,8 +1,8 @@
 import { html } from '../packages/preact.mjs';
 import { i18n } from '../utils.js';
 
-function SearchItem({ search, onEdit, onDeleted }) {
-  function handleDelete(e) {
+const SearchItem = ({ search, onEdit, onDeleted }) => {
+  const handleDelete = (e) => {
     e.preventDefault();
     e.stopPropagation();
     const deletedAt = new Date().toISOString();
@@ -12,15 +12,15 @@ function SearchItem({ search, onEdit, onDeleted }) {
         onDeleted(deletedSearch);
       });
     });
-  }
-  function handleEdit(e) {
+  };
+  const handleEdit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    onEdit && onEdit();
-  }
-  function handleItemClick(e) {
+    onEdit(search);
+  };
+  const handleItemClick = () => {
     window.open(search.url, '_blank', 'noopener');
-  }
+  };
   return html`
     <li class="list-group-item d-flex flex-column align-items-start search-item" title=${i18n('searchItemOpen')} onClick=${handleItemClick}>
       <div class="d-flex w-100 justify-content-between align-items-center">

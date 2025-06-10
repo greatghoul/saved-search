@@ -47,6 +47,10 @@
     "message": "Save New Search",
     "description": "The title of the new search modal."
   },
+  "searchModalEditTitle": {
+    "message": "Edit Search",
+    "description": "The title of the edit search modal."
+  },
   "searchName": {
     "message": "Search Name",
     "description": "The label for the search name input field."

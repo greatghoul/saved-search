@@ -1,22 +1,19 @@
 import { html, useState } from '../packages/preact.mjs';
-import { i18n, createToken } from '../utils.js';
+import { i18n } from '../utils.js';
 
-const SearchModalNew = ({ search, onCancel, onCreated }) => {
+const SearchModalEdit = ({ search, onCancel, onUpdated }) => {
   const [name, setName] = useState(search.name);
 
-  const handleCreate = () => {
-    const id = createToken('search');
+  const handleUpdate = () => {
     const now = new Date().toISOString();
-    const newSearch = { 
-      ...search, 
-      id, 
-      name, 
-      createdAt: now,
+    const updatedSearch = {
+      ...search,
+      name,
       updatedAt: now
     };
-    chrome.storage.local.set({ [id]: newSearch }, () => {
-      console.log('Search saved to chrome.storage.local:', newSearch);
-      if (onCreated) onCreated(newSearch);
+    chrome.storage.local.set({ [search.id]: updatedSearch }, () => {
+      console.log('Search updated in chrome.storage.local:', updatedSearch);
+      if (onUpdated) onUpdated(updatedSearch);
     });
   };
 
@@ -25,7 +22,7 @@ const SearchModalNew = ({ search, onCancel, onCreated }) => {
       <div class="modal-dialog modal-fullscreen-sm-down">
         <div class="modal-content">
           <div class="modal-body">
-            <h5>${i18n('searchModalNewTitle')}</h5>
+            <h5>${i18n('searchModalEditTitle')}</h5>
 
             <div class="mb-2">
               <label for="search-name" class="form-label">${i18n('searchName')}</label>
@@ -46,7 +43,7 @@ const SearchModalNew = ({ search, onCancel, onCreated }) => {
           </div>
           <div class="modal-footer text-right">
             <button class="btn btn-light btn-sm" onClick=${onCancel}>${i18n('buttonDismiss')}</button>
-            <button class="btn btn-primary btn-sm" onClick=${handleCreate}>${i18n('buttonSave')}</button>
+            <button class="btn btn-primary btn-sm" onClick=${handleUpdate}>${i18n('buttonSave')}</button>
           </div>
         </div><!-- .modal-content -->
       </div><!-- .modal-dialog -->
@@ -54,4 +51,4 @@ const SearchModalNew = ({ search, onCancel, onCreated }) => {
   `;
 }
 
-export default SearchModalNew;
+export default SearchModalEdit;
