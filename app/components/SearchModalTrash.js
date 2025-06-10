@@ -36,6 +36,7 @@ const SearchModalTrash = ({ trashSearches, onRestore, onCancel }) => {
                 ` : trashSearches.map(deletedSearch => html`
                   <a href="#"
                     class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                    title=${deletedSearch.keywords}
                     onClick=${() => handleRestore(deletedSearch)}
                   >
                     <span class="text-truncate" title=${deletedSearch.name}>${deletedSearch.name}</span>
