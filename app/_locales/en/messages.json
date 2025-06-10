@@ -39,10 +39,6 @@
     "message": "Save To",
     "description": "Save to button."
   },
-  "textReplaceSavedSearch": {
-    "message": "Replace a saved search",
-    "description": "Description to replace a saved search item."
-  },
   "textSearchNameHint": {
     "message": "Give this search a friendly name.",
     "description": "The hint of search name field."
@@ -60,7 +56,7 @@
     "description": "The title of the replace search modal."
   },
   "searchModalReplaceHint": {
-    "message": "Save current search to an existing one.",
+    "message": "Select an existing search to update its details with the current search.",
     "description": "The hint for replacing a saved search."
   },
   "searchName": {
