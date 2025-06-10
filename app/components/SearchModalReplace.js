@@ -1,4 +1,5 @@
 import { html } from '../packages/preact.mjs';
+import message from '../packages/message.js';
 import { i18n } from '../utils.js';
 
 const SearchModalReplace = ({ activeSearches, search, onReplace, onCancel }) => {
@@ -10,6 +11,8 @@ const SearchModalReplace = ({ activeSearches, search, onReplace, onCancel }) => 
       updatedAt: new Date().toISOString()
     };
     chrome.storage.local.set({ [updated.id]: updated }, () => {
+      console.log('Search saved to chrome.storage.local:', updated);
+      message.success(i18n('searchSavedSuccess'));
       if (onReplace) onReplace();
     });
   };

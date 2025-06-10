@@ -70,5 +70,13 @@
   "searchItemOpen": {
     "message": "Click to open the search URL",
     "description": "The label for the search item open link."
+  },
+  "searchSavedSuccess": {
+    "message": "Search saved successfully!",
+    "description": "Success message when a search is saved."
+  },
+  "searchDeletedSuccess": {
+    "message": "Search deleted successfully!",
+    "description": "Success message when a search is deleted."
   }
 }

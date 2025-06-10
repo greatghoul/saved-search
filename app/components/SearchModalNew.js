@@ -1,5 +1,6 @@
 import { html, useState } from '../packages/preact.mjs';
 import { i18n, createToken } from '../utils.js';
+import message from '../packages/message.js';
 
 const SearchModalNew = ({ search, onCancel, onCreated, onSaveTo }) => {
   const [name, setName] = useState(search.name);
@@ -16,6 +17,7 @@ const SearchModalNew = ({ search, onCancel, onCreated, onSaveTo }) => {
     };
     chrome.storage.local.set({ [id]: newSearch }, () => {
       console.log('Search saved to chrome.storage.local:', newSearch);
+      message.success(i18n('searchSavedSuccess'));
       if (onCreated) onCreated(newSearch);
     });
   };

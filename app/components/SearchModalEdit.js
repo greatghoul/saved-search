@@ -1,4 +1,5 @@
 import { html, useState } from '../packages/preact.mjs';
+import message from '../packages/message.js';
 import { i18n } from '../utils.js';
 
 const SearchModalEdit = ({ search, onCancel, onUpdated }) => {
@@ -13,6 +14,7 @@ const SearchModalEdit = ({ search, onCancel, onUpdated }) => {
     };
     chrome.storage.local.set({ [search.id]: updatedSearch }, () => {
       console.log('Search updated in chrome.storage.local:', updatedSearch);
+      message.success(i18n('searchSavedSuccess'));
       if (onUpdated) onUpdated(updatedSearch);
     });
   };

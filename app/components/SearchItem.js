@@ -1,4 +1,5 @@
 import { html } from '../packages/preact.mjs';
+import message from '../packages/message.js';
 import { i18n } from '../utils.js';
 
 const SearchItem = ({ search, onEdit, onDeleted }) => {
@@ -9,6 +10,8 @@ const SearchItem = ({ search, onEdit, onDeleted }) => {
     chrome.storage.local.get([search.id], (result) => {
       const deletedSearch = { ...result[search.id], deletedAt };
       chrome.storage.local.set({ [search.id]: deletedSearch }, () => {
+        console.log('Search saved to chrome.storage.local:', deletedSearch);
+        message.success(i18n('searchDeletedSuccess'));
         onDeleted(deletedSearch);
       });
     });
