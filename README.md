@@ -18,6 +18,15 @@ A Chrome extension that helps you save and manage your Google search queries.
 4. **Access Later**: Open the extension to view and click on saved searches
 5. **Manage**: Edit, delete, or restore searches as needed
 
+## 🔒 Privacy
+
+This extension respects your privacy:
+- **No Data Collection**: We don't send any data to external servers
+- **Local Storage Only**: All your searches are stored locally on your device
+- **Open Source**: The extension is completely open source and transparent
+
+Source code: https://github.com/greatghoul/saved-search
+
 ## Dependencies
 
 Bootstrap  
@@ -26,3 +35,7 @@ https://icons.getbootstrap.com/
 
 Preact  
 https://preactjs.com/guide/v10/getting-started
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
