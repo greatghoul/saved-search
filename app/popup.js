@@ -80,8 +80,75 @@ function Popup() {
 
   const loadSearches = () => fetchSearches().then(setSearches);
 
+  /**
+   * Migrates old search data from localStorage['searches'] to new storage format
+   */
+  const migrateSearches = () => {
+    return new Promise((resolve) => {
+      // Check for old searches data in localStorage
+      const oldSearchesData = localStorage.getItem('searches');
+      
+      if (oldSearchesData) {
+        try {
+          const oldSearches = JSON.parse(oldSearchesData);
+          
+          if (Array.isArray(oldSearches) && oldSearches.length > 0) {
+            const currentTime = new Date().toISOString();
+            const migrationPromises = [];
+            
+            oldSearches.forEach((oldSearch, index) => {
+              if (oldSearch.name && oldSearch.url && oldSearch.keywords) {
+                const newSearch = {
+                  id: `search-${Date.now()}-${index}`,
+                  name: oldSearch.name,
+                  url: oldSearch.url,
+                  keywords: oldSearch.keywords,
+                  createdAt: currentTime,
+                  updatedAt: currentTime
+                };
+                
+                // Save to chrome.storage.local with new format
+                const savePromise = new Promise((saveResolve) => {
+                  chrome.storage.local.set({ [newSearch.id]: newSearch }, () => {
+                    saveResolve();
+                  });
+                });
+                
+                migrationPromises.push(savePromise);
+              }
+            });
+            
+            // Wait for all saves to complete, then remove old data
+            Promise.all(migrationPromises).then(() => {
+              localStorage.removeItem('searches');
+              console.log('Successfully migrated', oldSearches.length, 'searches from old format');
+              resolve(true);
+            });
+          } else {
+            resolve(false);
+          }
+        } catch (error) {
+          console.error('Error parsing old searches data:', error);
+          resolve(false);
+        }
+      } else {
+        resolve(false);
+      }
+    });
+  };
+  
   useEffect(() => {
+    // First load current data, then migrate old data if needed
     loadSearches();
+    
+    migrateSearches().then((migrated) => {
+      if (migrated) {
+        console.log('Data migration completed');
+        // Reload searches after migration to include migrated data
+        loadSearches();
+      }
+    });
+    
     getActiveSearchUrl().then((url) => {
       if (url) {
         const keywords = getKeywords(url);
